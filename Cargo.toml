@@ -5,7 +5,6 @@ edition = "2024"
 
 [dependencies]
 anyhow = "1.0.98"
-clap = { version = "4.5.38", features = ["derive"] }
 rand = "0.9.1"
 
 [lib]
@@ -13,12 +12,17 @@ name = "hinty"
 path = "src/lib.rs"
 
 [[bin]]
-name = "generate"
-path = "bins/generate.rs"
+name = "baseline"
+path = "bins/baseline.rs"
 
 [[bin]]
-name = "run"
-path = "bins/run.rs"
+name = "likely"
+path = "bins/likely.rs"
+
+[[bin]]
+name = "unlikely"
+path = "bins/unlikely.rs"
+
 
 [dev-dependencies]
 criterion = "0.6"

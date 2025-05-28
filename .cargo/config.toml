@@ -1,0 +1,24 @@
+[build]
+rustflags = [
+    # "--emit=asm",
+    "-C",
+    "opt-level=3",
+    # "-C",
+    # "symbol-mangling-version=v0",
+    # "-C",
+    # "llvm-args=--x86-asm-syntax=intel",
+    # "-C",
+    # "debuginfo=2",
+    # "-C",
+    # "force-frame-pointers=yes",
+]
+
+# For specific profiles
+[profile.dev]
+debug = 2
+opt-level = 1
+
+[profile.release]
+# debug = 2     # Keep debug info even in release
+opt-level = 3
+lto = false   # Disable LTO to preserve individual functions
