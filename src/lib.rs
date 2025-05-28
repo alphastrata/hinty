@@ -1,7 +1,3 @@
-#![feature(likely_unlikely)]
-use std::hint::likely;
-use std::hint::unlikely;
-
 use std::{
     collections::HashSet,
     fs::File,
@@ -10,34 +6,11 @@ use std::{
 };
 
 pub struct NumberSet {
-    numbers: Vec<u64>,
-    fib_numbers: HashSet<u64>,
+    pub numbers: Vec<u64>,
+    pub fib_numbers: HashSet<u64>,
 }
 
 impl NumberSet {
-    // Standard version (no hint)
-    pub fn is_fib(&self, n: u64) -> bool {
-        self.fib_numbers.contains(&n)
-    }
-
-    // Likely hint version
-    pub fn is_fib_likely(&self, n: u64) -> bool {
-        if likely(self.fib_numbers.contains(&n)) {
-            true
-        } else {
-            false
-        }
-    }
-
-    // Unlikely hint version
-    pub fn is_fib_unlikely(&self, n: u64) -> bool {
-        if unlikely(self.fib_numbers.contains(&n)) {
-            true
-        } else {
-            false
-        }
-    }
-
     /// Load numbers from multiple files and precompute Fibonacci numbers in range
     pub fn from_files<P: AsRef<Path>>(paths: &[P]) -> io::Result<Self> {
         let mut numbers = Vec::new();

@@ -1,14 +1,5 @@
-use clap::Parser;
 use hinty::NumberSet;
-use std::{collections::HashSet, path::PathBuf};
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    /// Input files to process
-    #[arg(short, long, required = true)]
-    input: Vec<PathBuf>,
-}
+use std::{collections::HashSet, env, path::PathBuf};
 
 #[inline(never)]
 fn is_fib(fib_numbers: &HashSet<u64>, n: u64) -> bool {
@@ -16,8 +7,12 @@ fn is_fib(fib_numbers: &HashSet<u64>, n: u64) -> bool {
 }
 
 fn main() -> std::io::Result<()> {
-    let args = Args::parse();
-    let number_set = NumberSet::from_files(&args.input)?;
+    let paths = env::args()
+        .skip(1)
+        .map(|v| PathBuf::from(v))
+        .collect::<Vec<PathBuf>>();
+
+    let number_set = NumberSet::from_files(&paths)?;
     let answers = &number_set.fib_numbers;
     let fib_count = std::hint::black_box(
         number_set
