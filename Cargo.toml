@@ -17,8 +17,17 @@ name = "generate"
 path = "bins/generate.rs"
 
 [[bin]]
-name = "run"
-path = "bins/run.rs"
+name = "baseline"
+path = "bins/baseline.rs"
+
+[[bin]]
+name = "likely"
+path = "bins/likely.rs"
+
+[[bin]]
+name = "unlikely"
+path = "bins/unlikely.rs"
+
 
 [dev-dependencies]
 criterion = "0.6"

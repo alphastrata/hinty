@@ -11,4 +11,6 @@ cargo bench
 ./run_perf.sh
 ```
 
+NOTE: this projects `./cargo/config.toml` contains adjustments to have `rustc` emit assembly. s
+
  
