@@ -1,5 +1,4 @@
 #![feature(likely_unlikely)]
-use clap::Parser;
 use std::collections::HashSet;
 use std::env;
 use std::hint::likely;

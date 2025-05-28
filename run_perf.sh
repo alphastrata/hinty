@@ -6,35 +6,34 @@
 
 set -e
 
-# Input files, these will be different for you if you named them differently to how I did...
+# Input files
 FILES=(
     "90-10_likely.txt"
     "50-50.txt"
     "10-90_unlikely.txt"
 )
 
-VARIANTS=("standard" "likely" "unlikely")
+BINARIES=("baseline" "likely" "unlikely")
 
-echo "Building release version..."
-RUSTFLAGS="-g" cargo build --release --bin run
+echo "Building release versions..."
+RUSTFLAGS="-g" cargo build --release
 
 RESULTS_DIR="perf_results"
 mkdir -p "$RESULTS_DIR"
 
 # Run all combinations
 for file in "${FILES[@]}"; do
-    for variant in "${VARIANTS[@]}"; do
-        echo -e "\nRunning $file with $variant variant..."
+    for binary in "${BINARIES[@]}"; do
+        echo -e "\nRunning $file with $binary binary..."
         
         # Run with perf and save to log file
         perf stat -e branch-misses,branch-instructions,branches,cache-misses,cache-references \
-            ./target/release/run \
-            --input "$file" \
-            --variant "$variant" \
-            2> "${RESULTS_DIR}/${file%.*}_${variant}.perf.log"
+            ./target/release/$binary \
+            "$file" \
+            2> "${RESULTS_DIR}/${file%.*}_${binary}.perf.log"
         
         # Add human readable header to log
-        echo -e "\n=== $file - $variant ===" | cat - "${RESULTS_DIR}/${file%.*}_${variant}.perf.log" > temp && mv temp "${RESULTS_DIR}/${file%.*}_${variant}.perf.log"
+        echo -e "\n=== $file - $binary ===" | cat - "${RESULTS_DIR}/${file%.*}_${binary}.perf.log" > temp && mv temp "${RESULTS_DIR}/${file%.*}_${binary}.perf.log"
     done
 done
 
@@ -49,10 +48,10 @@ echo -e "\nGenerating summary report..."
         echo "File: $file"
         echo "----------------"
         
-        for variant in "${VARIANTS[@]}"; do
-            logfile="${RESULTS_DIR}/${file%.*}_${variant}.perf.log"
+        for binary in "${BINARIES[@]}"; do
+            logfile="${RESULTS_DIR}/${file%.*}_${binary}.perf.log"
             
-            echo -e "\nVariant: $variant"
+            echo -e "\nBinary: $binary"
             grep -E "branch-misses|branch-instructions|branches|cache-misses" "$logfile" | grep -v "seconds time elapsed"
         done
         
