@@ -9,21 +9,19 @@ fn is_fib(fib_numbers: &HashSet<u64>, n: u64) -> bool {
 fn main() -> std::io::Result<()> {
     let paths = env::args()
         .skip(1)
-        .map(|v| PathBuf::from(v))
+        .map(PathBuf::from)
         .collect::<Vec<PathBuf>>();
 
     let number_set = NumberSet::from_files(&paths)?;
     let answers = &number_set.fib_numbers;
-    let fib_count = std::hint::black_box(
-        number_set
-            .numbers()
-            .iter()
-            .filter(|n| is_fib(&answers, **n))
-            .count(),
-    );
+    let fib_count = number_set
+        .numbers()
+        .iter()
+        .filter(|n| is_fib(answers, **n))
+        .count();
 
     let total = number_set.numbers().len();
-    println!("Total numbers: {}", total);
+    println!("Total numbers: {total}");
     println!(
         "Fibonacci numbers: {} ({:.2}%)",
         fib_count,

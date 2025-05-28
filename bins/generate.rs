@@ -75,14 +75,14 @@ fn generate_and_save_numbers(n: u64, percentage: Option<u8>, output: &str) -> st
             // Shuffle and write
             numbers.shuffle(&mut rng);
             for num in numbers {
-                writeln!(writer, "{}", num)?;
+                writeln!(writer, "{num}")?;
             }
         }
         None => {
             // Generate all random numbers
             for _ in 0..n {
                 let num: u64 = rng.random();
-                writeln!(writer, "{}", num)?;
+                writeln!(writer, "{num}")?;
             }
         }
     }
