@@ -14,11 +14,22 @@ fn main() -> std::io::Result<()> {
 
     let number_set = NumberSet::from_files(&paths)?;
     let answers = &number_set.fib_numbers;
-    let fib_count = number_set
-        .numbers()
-        .iter()
-        .filter(|n| is_fib(answers, **n))
-        .count();
+    // NOTE I'd normally write code like this commented out section,
+    // HOWEVER according to the docs: https://doc.rust-lang.org/std/intrinsics/fn.likely.html
+    // unless you use an `if` statement hints are likely to have NO effect.
+    // let fib_count = number_set
+    //     .numbers()
+    //     .iter()
+    //     .filter(|n| is_fib(answers, **n))
+    //     .count();
+    let mut fib_count = 0;
+    for n in number_set.numbers().iter() {
+        if is_fib(answers, *n) {
+            fib_count += 1;
+        }
+        // No `else` needed here since we only count matches
+    }
+    // `fib_count` now holds the same value as before
 
     let total = number_set.numbers().len();
     println!("Total numbers: {total}");

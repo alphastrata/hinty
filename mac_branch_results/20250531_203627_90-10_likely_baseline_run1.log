@@ -1,0 +1,2 @@
+dtrace: system integrity protection is on, some features will not be available
+dtrace: failed to compile script /var/folders/zz/zyxvpxvq6csfxvn_n0000000000000/T/tmp.rn3bUq3w: line 21: this->calls has not yet been declared or assigned
