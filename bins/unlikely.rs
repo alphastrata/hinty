@@ -8,7 +8,7 @@ use hinty::NumberSet;
 
 #[inline(never)]
 fn is_fib(fib_numbers: &HashSet<u64>, n: u64) -> bool {
-    unlikely(fib_numbers.contains(&n))
+    fib_numbers.contains(&n)
 }
 
 fn main() -> std::io::Result<()> {
@@ -29,7 +29,7 @@ fn main() -> std::io::Result<()> {
     //     .count();
     let mut fib_count = 0;
     for n in number_set.numbers().iter() {
-        if is_fib(answers, *n) {
+        if unlikely(is_fib(answers, *n)) {
             fib_count += 1;
         }
         // No `else` needed here since we only count matches
