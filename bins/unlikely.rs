@@ -25,5 +25,5 @@ fn main() {
         }
     }
 
-    println!("Misses : {}", misses);
+    println!("Misses : {misses}");
 }

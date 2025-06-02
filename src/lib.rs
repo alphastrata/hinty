@@ -9,15 +9,15 @@ pub fn wikipedia_dataset_as_string() -> String {
         std::process::exit(1);
     }
 
-    let data = match std::fs::read_to_string(data_path) {
+    
+
+    match std::fs::read_to_string(data_path) {
         Ok(raw) => raw.to_lowercase().replace("_", " "),
         Err(e) => {
             eprintln!("Error reading file: {e}");
             std::process::exit(1);
         }
-    };
-
-    data
+    }
 }
 
 pub fn wikimedia_dataset_as_vec() -> Vec<String> {

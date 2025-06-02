@@ -15,8 +15,9 @@ fn main() {
         println!("Searching... {q}");
         
         for title in data.iter() {
+            // NOTE: this is bad, it should be bad, most of the Titles in the wikipedia dataset
+            // are NOT your search query.
             if std::intrinsics::likely(*title == q.to_lowercase()) {
-            if *title == q.to_lowercase() {
                 println!("{q} was located");
                 break;
             }
@@ -26,5 +27,5 @@ fn main() {
         }
     }
 
-    println!("Misses : {}", misses);
+    println!("Misses : {misses}");
 }
